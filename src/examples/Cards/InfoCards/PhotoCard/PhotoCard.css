@@ -1,0 +1,15 @@
+/* PhotoCard.css */
+.photo-card {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Centralize a imagem horizontalmente e verticalmente */
+  padding: 2px; /* Ajuste o espaçamento conforme necessário */
+  margin: 0; /* Remova as margens para garantir a largura da imagem */
+}
+
+.photo-card img {
+  max-width:90%; /* Limitar a largura da imagem a 90% do tamanho do container */
+  border-radius: 4px; /* Adicionar cantos arredondados na imagem */
+  box-shadow: 0 0 2px 1px rgba(180, 180, 180, 0.1); /* Adicionar sombra à imagem */
+
+}
