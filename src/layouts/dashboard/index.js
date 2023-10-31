@@ -70,8 +70,7 @@ function Dashboard(isLogged) {
     }
   }, []); 
   async function fetchData() {
-   
-    try {
+       try {
       // Requisição para obter o total de usuários
      // console.log(`${backendUrl}/users/count`)
       const usersResponse = await axios.post(`${backendUrl}/users/count`);
@@ -80,15 +79,15 @@ function Dashboard(isLogged) {
       const { count: usersCount } = usersResponse.data;
 
       // Requisição para obter o total de doenças
-      const doencasResponse = await axios.post("http://localhost:5000/doencas/count");
+      const doencasResponse = await axios.post(`${backendUrl}/doencas/count`);
       const { count: doencasCount } = doencasResponse.data;
 
       // Requisição para obter o total de pragas
-      const pragasResponse = await axios.post("http://localhost:5000/pragas/count");
+      const pragasResponse = await axios.post(`${backendUrl}/pragas/count`);
       const { count: pragasCount } = pragasResponse.data;
 
-      const fotosResponse = await axios.post("http://localhost:5000/doencas/count/fotos");
-      const pragasFotoResponse = await axios.post("http://localhost:5000/pragas/count/fotos");
+      const fotosResponse = await axios.post(`${backendUrl}/doencas/count/fotos`);
+      const pragasFotoResponse = await axios.post(`${backendUrl}/pragas/count/fotos`);
     //  console.log(pragasFotoResponse.data.totalCount)
       // Atualizar o estado totalIndices com a soma dos valores
       setTotalIndices(doencasCount + pragasCount);

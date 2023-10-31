@@ -235,7 +235,6 @@ function Users() {
   setIsNewUserVisible(false);
   //fetchUserData();
   fetchData();
-
   
   }
   

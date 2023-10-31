@@ -49,9 +49,9 @@ export default function MapHeat() {
     }
   };
 
-  const zoom = 5;
-  const lat = -12.84;
-  const lng = -50.4;
+  const zoom = 8;
+  const lat = -4.6079513;
+  const lng = -39.1166524;
 
   useEffect(() => {
     const map = L.map("mapHeat").setView([lat, lng], zoom);

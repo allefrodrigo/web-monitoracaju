@@ -31,6 +31,7 @@ function FotoTraca({apiUrl}) {
   const [fotosSadias, setFotosSadias] = useState([]);
   const [fotosLoading, setFotosLoading] = useState(true);
   const [tabValue, setTabValue] = useState(0);
+  const [photosLoaded, setPhotosLoaded] = useState(false);
   const [page, setPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -69,7 +70,12 @@ function FotoTraca({apiUrl}) {
       setFotosSadias(fotosSadiasArray);
    //   console.log(fotosDoentesArray);
       setFotosLoading(false);
-//      console.log(response.data)
+      if(response.data === undefined || response.data.length === 0){
+        setPhotosLoaded(false);
+        return;
+      } else {
+        setPhotosLoaded(true);
+      }
     } catch (error) {
       console.error("Error fetching doencas data:", error);
     }
@@ -120,11 +126,7 @@ function FotoTraca({apiUrl}) {
                   Listagem de Fotos
                 </MDTypography>
               </MDBox>
-              { fotosLoading ? 
-        <MDBox display="flex" justifyContent="center" alignItems="center" m={4}>
-<Skeleton variant="rectangular" width="100%" height={"light"} />
-              </MDBox>
-               : 
+             { photosLoaded? (
               <MDBox pt={3} m={2} >
             <Tabs orientation={"horizontal"} value={tabValue} onChange={handleSetTabValue} m={10}>
                 <Tab
@@ -149,15 +151,13 @@ function FotoTraca({apiUrl}) {
               <Grid container spacing={1} display="flex" justifyContent="center">
                 {renderPhotos()}
               </Grid>
+              
             ) : (
               <Grid container spacing={1} display="flex" justifyContent="center">
                 {renderPhotos()}
               </Grid>
             )}
-              
-              </MDBox>
-              
-}
+
 <Pagination
             count={Math.ceil((tabValue === 0 ? fotosDoentes : fotosSadias).length / itemsPerPage)}
             page={page}
@@ -168,7 +168,12 @@ function FotoTraca({apiUrl}) {
 
             
             sx={{ display: "flex", justifyContent: "center", padding: 3, color: '#FFFF' }}
-          />
+          />              
+              </MDBox>) : (              <MDBox pt={3} display="flex" justifyContent="center" alignItems="center" m={3}>
+Não há fotos disponíveis</MDBox>)}
+
+
+          
             </Card>
           </Grid>
         </Grid>

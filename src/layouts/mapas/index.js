@@ -46,11 +46,13 @@ function a11yProps(index) {
   };
 }
 
+
 function Mapas() {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    
   };
 
   return (

@@ -27,6 +27,7 @@ function Broca() {
   const [allDoencas, setAllDoencas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { columns, rows } = doencasTable(allDoencas);
+  const [dataLoading, setDataLoading] = useState(false);
 
   useEffect(() => {
     fetchData(); // Fetch data when the component mounts
@@ -44,7 +45,7 @@ function Broca() {
       });
       setAllDoencas(response.data); // Store obtained data in the state
       console.log(response.data)
-      setIsLoading(false)
+      setDataLoading(true)
       
     } catch (error) {
       console.error("Error fetching doencas data:", error);
@@ -83,9 +84,8 @@ function Broca() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3} display="flex" justifyContent="center" alignItems="center" m={3}>
-              {isLoading ? ( // If loading, show Skeleton
-      <CircularProgress color="success" />
-      ) : (
+              {dataLoading ? (
+
                   <DataTable
                     table={{ columns, rows }}
                     isSorted={false}
@@ -93,8 +93,8 @@ function Broca() {
                     showTotalEntries={false}
                     noEndBorder
                   />
-                )}
-              </MDBox>
+                  ) : (<> Não há dados disponíveis</>)}
+                  </MDBox>
             </Card>
           </Grid>
           <Grid item xs={12}>

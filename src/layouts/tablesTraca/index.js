@@ -29,6 +29,8 @@ function Traca() {
   const [allDoencas, setAllDoencas] = useState([]);
   const { columns, rows } = doencasTable(allDoencas);
   const [isLoading, setIsLoading] = useState(true); // Set loading to false
+  const [dataLoading, setDataLoading] = useState(false);
+
   useEffect(() => {
     fetchData(); // Fetch data when the component mounts
   }, []);
@@ -45,7 +47,7 @@ function Traca() {
       });
       setAllDoencas(response.data); // Store obtained data in the state
       console.log(response.data)
-      setIsLoading(false); // Update the loading state
+      setDataLoading(true); // Update the loading state
     } catch (error) {
       console.error("Error fetching doencas data:", error);
     }
@@ -82,19 +84,20 @@ function Traca() {
                   Listagem de Traça-da-castanha
                 </MDTypography>
               </MDBox>
+
               <MDBox pt={3} display="flex" justifyContent="center" alignItems="center" m={3}>
-              {isLoading ? ( // If loading, show Skeleton
-      <CircularProgress color="success" />
-      ) : (
+              {dataLoading ? (
+
                   <DataTable
                     table={{ columns, rows }}
                     isSorted={false}
                     entriesPerPage={false}
                     showTotalEntries={false}
-                    noEndBorder
-                  />
-                )}
+                    noEndBorder /> 
+                    ) : (<> Não há dados disponíveis</>)}
+
               </MDBox>
+
             </Card>
           </Grid>
           <Grid item xs={12}>

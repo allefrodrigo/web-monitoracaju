@@ -27,7 +27,10 @@ const backendUrl = process.env.REACT_APP_BACKEND_URL;
 function Doencas() {
   const [allDoencas, setAllDoencas] = useState([]);
   const { columns, rows } = doencasTable(allDoencas);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [dataLoading, setDataLoading] = useState(false);
+
+  
 
   useEffect(() => {
     fetchData(); // Fetch data when the component mounts
@@ -44,8 +47,14 @@ function Doencas() {
         },
       });
       setAllDoencas(response.data); // Store obtained data in the state
-      console.log(response.data)
-      setIsLoading(false); // Update the loading state
+
+      if(response.data === undefined || response.data.length === 0){
+        setDataLoading(false);
+        return;
+      }
+
+
+      setDataLoading(true); // Update the loading state
     } catch (error) {
       console.error("Error fetching doencas data:", error);
     }
@@ -83,9 +92,10 @@ function Doencas() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3} display="flex" justifyContent="center" alignItems="center" m={3}>
-              {isLoading ? ( // If loading, show Skeleton
+              {/* {isLoading ? ( // If loading, show Skeleton
       <CircularProgress color="success" />
-      ) : (
+      ) : ( */}
+                  {dataLoading ? (
                   <DataTable
                     table={{ columns, rows }}
                     isSorted={false}
@@ -93,7 +103,7 @@ function Doencas() {
                     showTotalEntries={false}
                     noEndBorder
                   />
-                )}
+                ) : (<> Não há dados disponíveis</>)}
               </MDBox>
             </Card>
           </Grid>
