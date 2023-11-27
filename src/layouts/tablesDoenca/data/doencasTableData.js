@@ -3,24 +3,32 @@
 
 import MDTypography from "components/MDTypography";
 import { format } from 'date-fns';
+import { da, ptBR } from 'date-fns/locale';
 
 export default function data(diseaseData) {
   console.log('diseaseDataReceived', diseaseData);
 
   
-
-  const rows = diseaseData.map((disease) => ({
-    nome: disease.userId,
-    value: disease.valorCalculado,
-    create: (
-      <MDTypography component="span" variant="caption" color="text" fontWeight="medium">
-      {format(new Date(disease.dataCalculo), 'dd/MM/yyyy')}
-      </MDTypography>
-    ),
-    lat: disease.latitude,
-    long: disease.longitude,
-
-  }));
+  const rows = diseaseData.map((disease) => {
+    // Extrair os componentes da data da string ISO
+    const [year, month, day] = disease.dataCalculo.split('T')[0].split('-').map(Number);
+  
+    // Criar uma nova data com os componentes extraídos
+    const date = new Date(year, month - 1, day);
+  
+    return {
+      nome: disease.userId,
+      value: disease.valorCalculado,
+      create: (
+        <MDTypography component="span" variant="caption" color="text" fontWeight="medium">
+          {format(date, 'dd/MM/yyyy', { locale: ptBR })}
+        </MDTypography>
+      ),
+      lat: disease.latitude,
+      long: disease.longitude,
+    };
+  });
+  
 
   return {
     columns: [

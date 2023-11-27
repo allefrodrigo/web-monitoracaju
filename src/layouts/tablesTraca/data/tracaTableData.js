@@ -2,47 +2,33 @@
 /* eslint-disable react/function-component-definition */
 
 // Monitora Caju React components
-import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDBadge from "components/MDBadge";
-import MDButton from "components/MDButton";
-import Icon from "@mui/material/Icon";
-import { format } from 'date-fns';
+
+import { format, parseISO  } from 'date-fns';
+import { da, ptBR } from 'date-fns/locale';
 export default function data(diseaseData) {
-  console.log('diseaseDataReceived', diseaseData);
 
-  const Author = ({ name, email }) => (
-    <MDBox display="flex" alignItems="center" lineHeight={1}>
-      <MDBox ml={2} lineHeight={1}>
-        <MDTypography display="block" variant="button" fontWeight="medium">
-          {name}
+  const rows = diseaseData.map((disease) => {
+    // Extrair os componentes da data da string ISO
+    const [year, month, day] = disease.dataCalculo.split('T')[0].split('-').map(Number);
+  
+    // Criar uma nova data com os componentes extraídos
+    const date = new Date(year, month - 1, day);
+  
+    return {
+      nome: disease.userId,
+      value: disease.valorCalculado,
+      create: (
+        <MDTypography component="span" variant="caption" color="text" fontWeight="medium">
+          {format(date, 'dd/MM/yyyy', { locale: ptBR })}
         </MDTypography>
-        <MDTypography variant="caption">{email}</MDTypography>
-      </MDBox>
-    </MDBox>
-  );
+      ),
+      lat: disease.latitude,
+      long: disease.longitude,
+    };
+  });
 
-  const Job = ({ title, description }) => (
-    <MDBox lineHeight={1} textAlign="left">
-      <MDTypography display="block" variant="caption" color="text" fontWeight="medium">
-        {title}
-      </MDTypography>
-      <MDTypography variant="caption">{description}</MDTypography>
-    </MDBox>
-  );
 
-  const rows = diseaseData.map((disease) => ({
-    nome: disease.userId,
-    value: disease.valorCalculado,
-    create: (
-      <MDTypography component="span" variant="caption" color="text" fontWeight="medium">
-      {format(new Date(disease.dataCalculo), 'dd/MM/yyyy')}
-      </MDTypography>
-    ),
-    lat: disease.latitude,
-    long: disease.longitude,
-
-  }));
 
   return {
     columns: [

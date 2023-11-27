@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
-
+import packageJson from "../../../../../package.json";
 // Monitora Caju React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -48,7 +48,7 @@ function Footer({ light }) {
                 &nbsp;IDSOFT&nbsp;
               </MDTypography>
             </Link>
-            para a Embrapa - CE
+            para a Embrapa - CE | Versão {packageJson.version}
           </MDBox>
   
         </MDBox>
